@@ -5,7 +5,6 @@
 #include <Wire.h>
 
 #include "7Semi_I2C_Interface.h"
-#include "7Semi_SPI_Interface.h"
 #include "BusIO_7Semi.h"
 
 #define AS7343_DEFAULT_ADDR 0x39
